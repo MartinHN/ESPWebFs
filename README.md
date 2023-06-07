@@ -52,3 +52,9 @@ upgradeAllESP /pathToBin/myBin.ino.bin /pathTo/public/dir
 # known issues
 
 * poor folder support for now
+
+
+# credits
+
+many thanks to https://myhomethings.eu/en/esp32-web-updater-and-spiffs-manager/
+where most of the code where taken from
