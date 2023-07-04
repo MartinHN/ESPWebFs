@@ -1,3 +1,6 @@
+RAW_DIR="$(dirname -- "$0")"
+SCRIPT_DIR=$(cd -- $RAW_DIR &>/dev/null && pwd)
+
 function get_allIps() {
     records=$(dns-sd -t 1 -B _WebFs._tcp | grep _WebFs._tcp.)
     names=$(echo $records | awk '{ print $7 }')
@@ -10,7 +13,7 @@ function upgradeESP() {
     binFile=$2
     publicDir=$3
     echo "upgrading $espHostName"
-    ./cliTools.sh $espHostName $binFile $publicDir &
+    bash ${SCRIPT_DIR}/cliTools.sh $espHostName $binFile $publicDir &
 }
 
 function upgradeAllESP() {

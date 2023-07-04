@@ -138,7 +138,9 @@ if [[ $1 != "" ]]; then
     espIp=$1
     check_connected
     ota_try_update $2
-    update_new_files $3
+    if [[ $3 != "" ]]; then
+        update_new_files $3
+    fi
     echo $espIp >>"/tmp/espUpgraded.txt"
 
 fi
