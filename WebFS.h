@@ -174,7 +174,7 @@ void setup(AsyncWebServer &server, const String &hostName = {},
     setupAsyncServer(server);
 
     if (hostName.length()) {
-        MDNS.begin(hostName);
+    MDNS.begin(hostName.c_str());
     }
     if (announceCaps) {
         MDNS.addService("WebFs", "tcp", 80);

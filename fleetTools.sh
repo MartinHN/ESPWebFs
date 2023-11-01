@@ -1,11 +1,16 @@
+#! /bin/bash
+# set -x -e
+
 RAW_DIR="$(dirname -- "$0")"
 SCRIPT_DIR=$(cd -- $RAW_DIR &>/dev/null && pwd)
 
 function get_allIps() {
-    records=$(dns-sd -t 1 -B _WebFs._tcp | grep _WebFs._tcp.)
+    OIFS=$IFS
+    IFS='\n'
+    records=$(dns-sd -t 1 -B _WebFs._tcp | grep -E "_WebFs._tcp.\s*(.*)")
     names=$(echo $records | awk '{ print $7 }')
+    IFS=$OIFS
     echo $names | tr '\n' ' '
-
 }
 
 function upgradeESP() {
@@ -20,6 +25,7 @@ function upgradeAllESP() {
     binFile=$1
     publicDir=$2
     ips=$(get_allIps)
+    echo "ips are $ips"
     flagF="/tmp/espUpgraded.txt"
     if [[ -f $flagF ]]; then
         rm $flagF
@@ -32,3 +38,8 @@ function upgradeAllESP() {
     wait
 
 }
+
+if [[ $1 != "" ]]; then
+    echo "executing"
+    upgradeAllESP $1 $2
+fi
